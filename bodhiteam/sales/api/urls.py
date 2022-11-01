@@ -3,7 +3,6 @@ from django.urls import path
 from sales.api import views
 
 
-
 urlpatterns = [
     url(r'get_my_new_leads/$',views.GetMyNewLeads.as_view(),name='GetMyNewLeads'),
     url(r'get_my_datewise_leads/$',views.GetMyNewLeadsDateWise.as_view(),name='salesExecutiveGetDateWiseLeads'),
@@ -37,6 +36,22 @@ urlpatterns = [
     url(r'get_my_today_assigned_leads/$', views.GetMyTodayAssignedLeadsAPI.as_view(), name='GetMyTodayAssignedLeadsAPI'),
     url(r'get_my_old_leads/$', views.GetMyOldLeadsAPI.as_view(), name='GetMyOldLeadsAPI'),
     url(r'get_old_leads_filterwise/$', views.GetOldLeadsFilter.as_view(), name='GetOldLeadsFilter'),
+
+
+    path('institute/create/', views.CreateInstitute.as_view(),
+         name='create-institute'),
+    path('institute/get/', views.GetInstituteDetailAPI.as_view(),
+         name='get-institute'),
+    path('institute/get/all/', views.GetInstituteAPI.as_view(),
+         name='get-all-institute'),
+    path('institute/update/', views.UpdateInstitute.as_view(),
+         name='update-institute'),
+    path('institute/status/', views.InstituteStatusAPI.as_view(),
+         name='status-of-institute'),
+    path('institute/requirements/status/', views.InstituteRequirementsStatusAPI.as_view(),
+         name='institute-requirements-status'),
+    path('institute/requirements/create/', views.CreateInstituteRequirementsAPI.as_view(),
+         name='institute-requirements-create'),
 
 
 ]
