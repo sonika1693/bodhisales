@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>upload lead</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+	{% if messages %}
+	<div class="container"
+		style="height: 300px; position: fixed;top:500px; left: 200px; right: 200px; z-index: 999 !important;">
+		<div class="div"
+			style="margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+			{% for message in messages %}
+			<div class="alert alert-{{ message.tags }} alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>{{ message.tags }}!</strong> {{ message }}.
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	<style>
+		.center-screen {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			min-height: 100vh;
+		}
+	</style>
+	<form method='POST' action="/sales/upload_new_csv" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="center-screen">
+			<div class="col-md-10">
+				<div class="form-group">
+					<strong><label for="email">Upload Lead</label></strong>
+					<input type="file" required class="form-control" name="file" id="file" accept=".csv,.XLSX">
+					<strong>Only accepts csv or xlsx files</strong>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

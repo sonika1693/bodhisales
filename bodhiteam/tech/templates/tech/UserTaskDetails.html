@@ -1,0 +1,35 @@
+{% extends 'tech/basic.html'%}
+{% block title %}User Task Details{% endblock %}
+<style>
+  form input, textarea{
+    background-color:aqua;
+    color:black;
+  }
+</style>
+{% block body %}
+  <div class="container">
+    <h3 class="top_heading">User Task Details</h3>
+    <table class="table table-dark table-striped">
+        <tr>
+            <td>Task</td>
+            <td>{{report.task.task_title}}</td>
+        </tr>
+        <tr>
+            <td>Issues</td>
+            <td>{{report.developer_issues|default_if_none:''}}</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>{{report.status.title}}</td>
+        </tr>
+        <tr>
+            <td>Task Status</td>
+            <td>{{report.task_status.title}}</td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>{{report.date|date:"d-m-Y"}}</td>
+        </tr>
+    </table>
+  </div> 
+  {% endblock %}

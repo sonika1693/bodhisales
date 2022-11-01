@@ -1,0 +1,61 @@
+{% extends 'tech/basic.html'%}
+{% block title %}Create Task{% endblock %}
+<style>
+  form input, textarea{
+    background-color:aqua;
+    color:black;
+}
+</style>
+{% block body %}
+  <div class="container">
+    <h3 class="top_heading">Create Task</h3>
+      <form action="/tech/create_task/" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Assigned To</label>
+            <select multiple name="assigned_to" class="form-select" aria-label="Default select example">
+              {% for developer in developer_list %}
+                  <option value="{{developer.id}}" selected>{{developer.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Institute</label>
+            <input type="text" class="form-control" name="institute">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Task Title</label>
+            <input type="text" class="form-control" name="task_title">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Task Description</label>
+            <textarea class="form-control" rows="6" name="task_description"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Task Due Date</label>
+            <input type="datetime-local" class="form-control" name="due_date">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <button type="submit" class="btn btn-secondary">Submit</button>
+          </div>
+        </div>
+        
+      </form>
+  </div>
+  {% endblock %}

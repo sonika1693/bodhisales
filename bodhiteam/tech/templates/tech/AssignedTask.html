@@ -1,0 +1,41 @@
+{% extends 'tech/basic.html'%}
+{% block title %}Assigned Tasks{% endblock %}
+{% block body %}
+<div class="container">
+    <h3 class="top_heading">Assigned Tasks</h3>
+    <div class="col-md-12 col-12 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-primary table-striped">
+              <tbody>
+                <tr>
+                  <th>S.no</th>
+                  <th>Institute</th>
+                  <th>Task Title</th>
+                  <th>Create_date</th>
+                  <th>Due_date</th>
+                  <th>Status</th>
+                  <th>View</th>
+                  <th>Edit</th>
+                </tr>
+                {% for task in tasks %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{task.institute}}</td>
+                  <td>{{task.task_title}}</td>
+                  <td>{{task.create_date|date:"d-m-Y"}}</td>
+                  <td>{{task.due_date|date:"d-m-Y"}}</td>
+                  <td>{{task.project_status}}</td>
+                  <td><a href="/tech/task_details/?task_id={{task.id}}"><i class="bi bi-eye"></i></a></td>
+                  <td><a href="/tech/edit_task/?task_id={{task.id}}"><i class="bi bi-pencil-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,395 @@
+{% extends 'tech/basic.html'%}
+{% block title %}Task Details{% endblock %}
+<style></style>
+{% block body %}
+<div class="container">
+  <h3 class="top_heading">Task Details</h3>
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Worked By</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <select multiple name="worked_by" readonly class="form-select" aria-label="Default select example">
+            {% for developer in developers %}
+                <option value="">{{developer.name}} ------{{developer.typeTech}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Institute</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <input type="text" class="form-control" value="{{task.institute}}" readonly>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Task Title</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <input type="text" class="form-control" value="{{task.task_title}}" readonly>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Task Description</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <textarea class="form-control" rows="6" readonly>{{task.task_description}}</textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Task Creation Date</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <input type="text" class="form-control" value="{{task.create_date|date:'Y-m-d H:i'}}" readonly>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Task Due Date</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <input type="text" class="form-control" value="{{task.due_date|date:'Y-m-d H:i'}}" readonly>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Team Leader Instructions</label>
+          </div>
+          <div class="mb-3 col-md-9">
+          <textarea class="form-control" rows="6" readonly>{{task.additional_details}}</textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Status</label>
+        </div>
+        <div class="mb-3 col-md-9">
+          <input type="text" class="form-control" value="{{task.project_status}}" readonly>
+        </div>
+      </div>
+  </div>
+  {% if request.user.techperson.typeTech == "Team Leader" %}
+  <div class="container">
+    <div class="col-md-12 col-12 col-sm-12 search_box">
+      <form method="POST" id="searchDeveloper">
+        {% csrf_token %}
+        <input name="task_id" id="task_id" type="hidden" value="{{task.id}}">
+        <div class="row">
+          <div class="mb-3 col-md-3">
+            <select name="developer_id" id="developer_id" class="form-select" aria-label="Default select example">
+              <option value="all">All</option>
+              {% for developer in developers %}
+              <option value="{{developer.id}}">{{developer.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3 col-md-9"><button type="submit" class="btn btn-primary">Sumit</button></div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-12 col-12 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-primary table-striped">
+                <tr style="background-color: #cfe2ff !important;">
+                  <th>S.no</th>
+                  <th>Developer</th>
+                  <th>User Status</th>
+                  <th>Task Status</th>
+                  <th>Date</th>
+                  <th>View</th>
+                  <th>Delete</th>
+                </tr>
+                <tbody id="mylist">
+                {% for user_task in assigned_developer_report %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{user_task.developer.name}}</td>
+                  <td>{{user_task.status}}</td>
+                  <td>{{user_task.task_status}}</td>
+                  <td>{{user_task.date|date:"d-m-Y"}}</td>
+                  <td>
+                    <a href="#" data-toggle="modal" data-target="#report{{user_task.id}}" class="themesflat-button bg-accent"><i class="bi bi-eye"></i></a>
+                    <div class="modal fade test" id="report{{user_task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                      <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header text-center">
+                                  <h4 class="modal-title w-100 font-weight-bold"><b>Report Details</b></h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <table class="table table-striped popup_table">
+                                <tr>
+                                    <td>Task Title</td>
+                                    <td>{{user_task.task.task_title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Developer Query</td>
+                                    <td>{{user_task.developer_issues|default_if_none:''}}</td>
+                                </tr>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><a href="/tech/delete_developer_task/{{user_task.id}}/{{request.GET.task_id}}"><i class="bi bi-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="container mid_box">
+    <div class="col-md-12 col-12 col-sm-12 btn_box">
+      <button type="button" class="btn btn-primary" id="btn1" onclick="show_reports('my_reports')">My Reports</button>
+      <button type="button" class="btn btn-secondary" id="btn2" onclick="show_reports('all_reports')">All Reports</button>
+      <a href="#" data-toggle="modal" data-target="#modalContactForm" class="themesflat-button bg-accent"><button type="button" class="btn btn-secondary" id="btn3">Add</button></a>
+    </div>
+    <div class="col-md-12 col-12 col-sm-12" id="developer_reports" style="display:none;" >
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-primary table-striped">
+              <tbody>
+                <tr>
+                  <th>S.no</th>
+                  <th>Developer</th>
+                  <th>User Status</th>
+                  <th>Task Status</th>
+                  <th>Date</th>
+                  <th>View</th>
+                </tr>
+                {% for user_task in assigned_developer_report %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{user_task.developer.name}}</td>
+                  <td>{{user_task.status}}</td>
+                  <td>{{user_task.task_status}}</td>
+                  <td>{{user_task.date|date:"d-m-Y"}}</td>
+                  <!-- <td><a href="/tech/task_details/{{user_task.id}}"><i class="bi bi-eye"></i></a></td> -->
+                  <td>
+                    <a href="#" data-toggle="modal" data-target="#otherreport{{user_task.id}}" class="themesflat-button bg-accent"><i class="bi bi-eye"></i></a>
+                    <div class="modal fade test" id="otherreport{{user_task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                      <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header text-center">
+                                  <h4 class="modal-title w-100 font-weight-bold"><b>Report Details</b></h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <table class="table table-striped popup_table">
+                                <tr>
+                                    <td>Task Title</td>
+                                    <td>{{user_task.task.task_title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Developer Query</td>
+                                    <td>{{user_task.developer_issues|default_if_none:''}}</td>
+                                </tr>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-12 col-sm-12" id="my_reports" >
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-primary table-striped">
+              <tbody>
+                <tr>
+                  <th>S.no</th>
+                  <th>Developer</th>
+                  <th>User Status</th>
+                  <th>Task Status</th>
+                  <th>Date</th>
+                  <th>View</th>
+                  <th>Delete</th>
+                </tr>
+                {% for user_task in individual_developer_report %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{user_task.developer.name}}</td>
+                  <td>{{user_task.status}}</td>
+                  <td>{{user_task.task_status}}</td>
+                  <td>{{user_task.date|date:"d-m-Y"}}</td>
+                  <td>
+                    <a href="#" data-toggle="modal" data-target="#selfreport{{user_task.id}}" class="themesflat-button bg-accent"><i class="bi bi-eye"></i></a>
+                    <div class="modal fade test" id="selfreport{{user_task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                      <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header text-center">
+                                  <h4 class="modal-title w-100 font-weight-bold"><b>Report Details</b></h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <table class="table table-striped popup_table">
+                                <tr>
+                                    <td>Task Title</td>
+                                    <td>{{user_task.task.task_title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Developer Query</td>
+                                    <td>{{user_task.developer_issues|default_if_none:''}}</td>
+                                </tr>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><a href="/tech/delete_developer_task/{{user_task.id}}/{{request.GET.task_id}}"><i class="bi bi-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+<!-- start popup for add user report -->
+<div  class="modal fade test" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"><b> Add New Report</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/tech/add_report/{{task.id}}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body mx-3">
+                    <div class="md-form my-2 mb-5 ">
+                        <label data-error="wrong" data-success="right" for="form34">User Status</label>
+                        <select class="form-select" name="user_status" aria-label="Default select example" required>
+                          <option value="">select</option>
+                          {% for status in user_status %}
+                              <option value="{{status.id}}">{{status.title}}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+                    <div class="md-form mb-5 ">
+                        <label data-error="wrong" data-success="right" for="form34">Task Status</label>
+                        <select class="form-select" name="task_status" aria-label="Default select example" required>
+                          <option value="">select</option>
+                          {% for status in task_status %}
+                              <option value="{{status.id}}">{{status.title}}</option>
+                          {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="md-form mb-5 ">
+                      <label data-error="wrong" data-success="right" for="form34">User Query</label>
+                      <textarea  class="form-control validate" rows="3"  name="user_query" placeholder="Enter your query..."></textarea>
+                  </div>   
+                </div>
+                <div class="modal-footer d-flex justify-content-center ">
+                    <button type="submit" class="btn btn-unique btn-success"><strong>Submit</strong></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- pop end -->
+
+<script>
+$("#searchDeveloper").submit(function(event)
+{
+  // alert("Handler for .submit() called.");
+  event.preventDefault();
+  tid = $("#task_id").val()
+  devid = $("#developer_id").val()
+
+  // alert('here')   
+  $.ajax(
+        {
+            type: "GET",
+            url: "/tech/search_report",
+            contentType: "application/json",
+            data: {
+                TaskID: tid,
+                DeveloperID: devid
+            },
+            // beforeSend: function () {
+            //     $('.loading-area').css("display", "flex");
+            // },
+            success: function(response) 
+            {
+              // console.log(response);
+              $("#mylist").empty()
+              
+              for (i = 0; i < response.length; i++) 
+              {
+                count = i+1 
+                $("#mylist").append(
+                  "<tr><td>"
+                    + count + "</td><td>" 
+                    + response[i]['developer_id'] + "</td><td>"
+                    + response[i]['status_id']+"</td><td>"
+                    + response[i]['task_status_id']+"</td><td>" 
+                    + response[i]['date']+"</td>\
+                    <td><a href='#'><i class='bi bi-eye'></i></a></td>\
+                    <td><a href='#'><i class='bi bi-trash'></i></a></td></tr>"
+                    )
+              }
+            }
+        });
+
+});
+  
+
+  function show_reports(type){
+    if(type == 'my_reports'){
+      $('#my_reports').show()
+      $('#developer_reports').hide()
+
+      $("#btn1").removeClass("btn-secondary");
+      $("#btn1").addClass("btn-primary");
+
+      $("#btn2").removeClass("btn-primary");
+      $("#btn2").addClass("btn-secondary");  
+    }
+    else{
+      $('#developer_reports').show()
+      $('#my_reports').hide()
+
+      $("#btn1").removeClass("btn-primary");
+      $("#btn1").addClass("btn-secondary");
+      
+      $("#btn2").removeClass("btn-secondary");
+      $("#btn2").addClass("btn-primary");
+    }
+  }
+</script>
+
+{% endblock %}

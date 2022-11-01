@@ -1,0 +1,108 @@
+{% extends 'tech/basic.html'%}
+{% block title %}New Tasks{% endblock %}
+<style>
+  form input, textarea{
+    background-color:aqua;
+    color:black;
+}
+</style>
+{% block body %} 
+  <div class="container">
+    <h3 class="top_heading">Edit Task</h3>
+      <form action="/tech/edit_task/" method="POST">
+        {% csrf_token %}
+        {% if request.GET.task_id %}
+        <input type="hidden" name="task_id" value="{{request.GET.task_id}}">
+        {% endif %}
+        <!-- <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Status</label>
+            <select class="form-select" aria-label="Default select example">
+              <option value="" selected>Select</option>
+              {% for t in technology %}
+                  <option value="{{t.id}}">{{t.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Worked By</label>
+            <select multiple name="worked_by" class="form-select" aria-label="Default select example">
+              {% for developer in developer_list %}
+                  {% if developer.id in workedBy %}
+                  <option value="{{developer.id}}" selected>{{developer.name}}</option>
+                  {% else %}
+                  <option value="{{developer.id}}">{{developer.name}}</option>
+                  {% endif %}
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Institute</label>
+            <input type="text" class="form-control" value="{{get_task.institute}}" name="institute" readonly>
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Task Title</label>
+            <input type="text" class="form-control" value="{{get_task.task_title}}" name="task_title" readonly>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Task Description</label>
+            <textarea class="form-control" rows="6" name="task_description" readonly>{{get_task.task_description}}</textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Task Creation Date</label>
+            <input type="datetime-local" class="form-control" value="{{get_task.create_date|date:'Y-m-d H:i'}}" name="create_date" readonly>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Task Due Date</label>
+            <input type="datetime-local" class="form-control" value="{{get_task.due_date|date:'Y-m-d H:i'}}" name="due_date" placeholder="Enter Task Due Date">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-12">
+            <label for="exampleInputEmail1" class="form-label">Team Leader Instructions</label>
+            <textarea class="form-control" rows="6"  name="additional_details" placeholder="Enter Extra Notes">{{get_task.additional_details|default_if_none:''}}</textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="exampleInputEmail1" class="form-label">Status</label>
+            <select class="form-select" name="projectStatus" aria-label="Default select example">
+              <option value="{{get_task.project_status.id}}" selected>{{get_task.project_status}}</option>
+
+
+              {% for status in status_list %}
+                  {% if status.id == get_task.project_status.id %}
+
+                  {% else %}
+                  <option value="{{status.id}}">{{status.title}}</option>
+                  {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <button type="submit" class="btn btn-secondary">Submit</button>
+          </div>
+        </div>
+        
+      </form>
+  </div>
+  {% endblock %}

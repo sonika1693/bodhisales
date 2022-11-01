@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home-BodhiAi</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <div class="grey-bg container-fluid" style="margin-top: 20px;"></div>
+    <style>
+        .grey-bg {
+            background-color: #F5F7FA;
+        }
+
+        body {
+            background: #f5fafa;
+        }
+
+        .messagedesign {
+            width: 500px;
+            height: 40px;
+            font-size: 25px;
+            font-family: serif;
+            color: white;
+            background: rgb(41, 41, 41);
+            text-align: center;
+            border-radius: 1ch;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Welcome
+        {{user.salesexecutive.name}} {{user.salesexecutive.typeExecutive}}</h1>
+    <h3 style="text-align: center; font-family: serif ;">Bodhi AI </h3>
+    <div class="container-fluid px-2">
+        <section id="minimal-statistics" style="margin-top: 10px;">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Get_my_new_leads">
+                        <div class="card" style="background: rgb(215, 182, 247);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-list primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>{{NewleadsLenght}}</h3>
+                                            <span>New Leads</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Get_my_worked_leads">
+                        <div class="card" style="background: rgb(250, 208, 208);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-docs warning font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>{{WorkedLeadsLenght}}</h3>
+                                            <span>Worked Leads</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Get_my_assigned_leads">
+                        <div class="card" style="background: rgb(207, 245, 169);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-info success font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>{{assignedleads}}</h3>
+                                            <span>Assigned Leads</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Specific_person_successfullLeads/">
+                        <div class="card" style="background: rgb(252, 228, 241)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="success">{{successfully_leads_length}}</h3>
+                                            <span>Successfull Leads</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-check success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Sendmassage">
+                        <div class="card" style="background: rgb(240, 208, 128);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="danger">Send</h3>
+                                            <span>Message</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-speech danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/add_comfirmLead">
+                        <div class="card" style="background: rgb(222, 203, 250);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="danger">Add</h3>
+                                            <span>Successfull Lead</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-plus danger font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/Get_my_all_notifications/">
+                        <div class="card" style="background: rgb(248, 248, 157);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="warning">{{allNotificationslength}}</h3>
+                                            <span>Notifications</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-bell warning font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/messagesInbox/">
+                        <div class="card" style="background: rgb(231, 219, 219)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="success">{{allmessagelength}}</h3>
+                                            <span>Inbox</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-bubbles success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/salesUser_profile">
+                        <div class="card" style="background: rgb(252, 210, 156)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="primary">My</h3>
+                                            <span>Profile</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-user primary font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/">
+                        <div class="card" style="background: rgb(192, 243, 243);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-book-open danger font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>My</h3>
+                                            <span>Demo's</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/sales/apply_filter_AndSearch/">
+                        <div class="card" style="background: rgb(218, 253, 198)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-left">
+                                            <h3 class="success">Search</h3>
+                                            <span>Filter and Sort</span>
+                                        </div>
+                                        <div class="align-self-center">
+                                            <i class="icon-magnifier success font-large-2 float-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section id="stats-subtitle">
+            <div class="row">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card overflow-hidden" style="background: rgb(255, 200, 255);">
+                        <div class="card-content">
+                            <div class="card-body cleartfix">
+                                <div class="media align-items-stretch">
+                                    <div class="align-self-center">
+                                        <i class="icon-pencil primary font-large-2 mr-2"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>Total Posts (under construction)</h4>
+                                        <span>Monthly blog posts</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <h1>18,000</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-md-12">
+                    <div class="card" style="background: rgb(250, 239, 142)">
+                        <div class="card-content">
+                            <div class="card-body cleartfix">
+                                <div class="media align-items-stretch">
+                                    <div class="align-self-center">
+                                        <i class="icon-speech warning font-large-2 mr-2"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>Total Comments (under construction)</h4>
+                                        <span>Monthly blog comments</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <h1>84,695</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card" style="background: rgb(250, 144, 144);">
+                        <div class="card-content">
+                            <div class="card-body cleartfix">
+                                <div class="media align-items-stretch">
+                                    <div class="align-self-center">
+                                        <h1 class="mr-2">$76,456.00</h1>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>Total Sales (under construction)</h4>
+                                        <span>Monthly Sales Amount</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-heart danger font-large-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-12">
+                    <div class="card" style="background: rgb(110, 243, 236);">
+                        <div class="card-content">
+                            <div class="card-body cleartfix">
+                                <div class="media align-items-stretch">
+                                    <div class="align-self-center">
+                                        <h1 class="mr-2">$36,000.00</h1>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>Total Cost (under construction)</h4>
+                                        <span>Monthly Cost</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="icon-wallet success font-large-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    {% if messages %}
+    <div class="container" style="height: 200px; position: fixed;top:500px; left: 200px; right: 200px;">
+        <div class="div"
+            style="margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ message.tags }}!</strong> {{ message }}.
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% for i in user_notification %}
+    <div class="container">
+        <div class="modal" id="{{i.id}}myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                <h4 class="modal-title">New message</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                {{i.massage}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endfor %}
+{% if user_notification %}
+<script>
+{% for i in user_notification %}
+$("#{{i.id}}myModal").modal('show')
+{% endfor %}
+</script>
+{% endif %}
+</body>
+
+</html>

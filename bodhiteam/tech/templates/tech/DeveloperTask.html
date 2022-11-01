@@ -1,0 +1,44 @@
+{% extends 'tech/basic.html'%}
+{% block title %}Developers Tasks{% endblock %}
+{% block body %}
+  <div class="container">
+    <h3 class="top_heading">Developers Tasks</h3>
+    <div class="col-md-12 col-12 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-primary table-striped">
+              <tbody>
+                <tr>
+                  <th>S.no</th>
+                  <th>Developer</th>
+                  <th>Task</th>
+                  <th>Issues</th>
+                  <th>User Status</th>
+                  <th>Task Status</th>
+                  <th>Date</th>
+                  <th>View</th>
+                </tr>
+                {% for user_task in user_tasks %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{user_task.developer.name}}</td>
+                  <td>{{user_task.task.task_title}}</td>
+                  <td>{{user_task.developer_issues}}</td>
+                  <td>{{user_task.status}}</td>
+                  <td>{{user_task.task_status}}</td>
+                  <td>{{user_task.date|date:"d-m-Y"}}</td>
+                  <td>
+                    <a href="/tech/developer_task/?id={{user_task.id}}" class="btn btn-primary btn-action mr-1"
+                      data-toggle="tooltip" title="" data-original-title="Details">View</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

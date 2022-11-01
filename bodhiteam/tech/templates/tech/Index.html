@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home-BodhiAi</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <style>
+        .grey-bg {
+            background-color: #F5F7FA;
+        }
+
+        body {
+            background: #f5fafa;
+        }
+
+        .messagedesign {
+            width: 500px;
+            height: 40px;
+            font-size: 25px;
+            font-family: serif;
+            color: white;
+            background: rgb(41, 41, 41);
+            text-align: center;
+            border-radius: 1ch;
+        }
+        .body_top{margin-top: 30px; border-bottom: 1px double;}
+        .body_mid{margin-top: 50px;}
+        .body_top h1{
+            text-align: center; 
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+        }
+        .body_top h3{
+            text-align: center; 
+            font-family: serif ;
+        }
+        .body_top .left{float: left; width:50%; padding: 15px;}
+        .body_top .right{float: right; width:50%; text-align: right; padding: 15px;}
+    </style>
+</head>
+<body>
+    <div class="container-fluid px-2 body_top">
+        <section>
+            <div class="row">
+                <div class="left">
+                    <h1>Welcome {{user.techperson.name}} {{user.techperson.typeTech}}</h1>
+                    <h3>Bodhi AI</h3>
+                </div>
+                <div class="right">
+                    <a href="/sales/logout"><button style="border-radius: 0.5ch; width: 100px; background: rgb(216, 213, 213);">Logout</button></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="container-fluid px-2 body_mid">
+        <section id="minimal-statistics" style="margin-top: 10px;">
+            <div class="row">
+                {% if request.user.techperson.typeTech == "Team Leader" %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/tech/create_task/">
+                        <div class="card" style="background: rgb(215, 182, 247)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-list primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 class="success"></h3>
+                                            <span>Create Task</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% else %}
+                {% endif %}
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="/tech/new_task/">
+                        <div class="card" style="background: rgb(250, 208, 208);">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-check success font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 class="success"></h3>
+                                            <span>New Tasks ({{new_task_length}})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    {% if request.user.techperson.typeTech == "Team Leader" %}
+                    <a href="/tech/assigned_task/">
+                    {% else %}
+                    <a href="/tech/accepted_task/">
+                    {% endif %}    
+                        <div class="card" style="background: rgb(207, 245, 169)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-check success font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 class="success"></h3>
+                                            {% if request.user.techperson.typeTech == "Team Leader" %}
+                                            <span>Assigned Task ({{assign_task_length}})</span>
+                                            {% else %}
+                                            <span>Accepted Task ({{accept_task_length}})</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="#">
+                        <div class="card" style="background: rgb(252, 228, 241)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-check success font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 class="success"></h3>
+                                            <span>Testing ({{assign_task_length}})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <a href="#">
+                        <div class="card" style="background: rgb(207, 245, 169)">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-check success font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3 class="success"></h3>
+                                            <span>Testing ({{assign_task_length}})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<!-- <div class="container-fluid px-2 body_bottom" style="background-color: #deded5;">
+  <footer style="background-color: #deded5;">
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-lg-8 col-md-12">
+          <h5 class="mb-3" style="letter-spacing: 2px; color: #818963;">About Company</h5>
+          <p>
+            Bodhi AI in India is No. 1 for creating quality school management and coaching management apps. 
+            Our live classes are second to none in the whole country for teaching thousands of students live.
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h5 class="mb-1" style="letter-spacing: 2px; color: #818963;">opening hours</h5>
+          <table class="table" style="color: #4f4f4f; border-color: #666;">
+            <tbody>
+              <tr>
+                <td>Mon - Sat:</td>
+                <td>10am - 6pm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      </div>
+  </footer> 
+</div> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</html>

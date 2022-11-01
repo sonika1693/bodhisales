@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %} {% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    /* body {
+      background-image: url("https://www.teahub.io/photos/full/313-3132029_linkedin-wallpaper-wallpapersafari-background-image-for-form-in.jpg");
+    } */
+    /* .navbar ul li a:hover{
+      background-color:#fff;
+      border-radius: 5px;
+      color: #000;
+      font-weight: 700;
+    } */
+    .navbar {
+            height: 70px;
+            padding: 10px;
+        }
+    .navbar ul li a{color: #fff;}
+    
+    /* .navbar ul li:last-child>a{
+      background-color: #3399cc;
+      color: #fff;
+      border-radius: 4px;
+      padding: 10px 15px;
+      margin-left: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 13px;
+    } */
+    .navbar ul li.active > a,.navbar ul li.active > a:focus{
+      color: #000;
+      background-color:#fff;
+      border-radius: 8px;
+	    font-weight:700;
+      padding: 6px;
+    }
+    .navbar ul li a::after{
+      position:absolute;
+      content:"";
+      bottom:0;
+      border-bottom:2px solid #3399cc;
+      left:0;
+      right:0;
+      text-align:center;
+      margin:0 auto;
+      height:2px;
+      width:32px;
+      transition:0.3s all ease-in-out;
+      display:none;
+    }
+    .navbar ul li.active>a::after ,.navbar ul li:hover>a::hover{
+      display:block;
+    }
+
+    
+    .modal .popup_table tr td:nth-child(1){
+      border-right: 1px solid aquamarine;
+    }
+
+    .modal .popup_table{
+    width: 90%;
+    margin: 20px;
+    border: 1px solid aquamarine;
+   }
+    form input, textarea{
+    background-color:aqua;
+    color:black;
+  }
+    .bi{color:black;}
+    .alert i[class^="bi-"]{
+      font-size: 1.5em;
+      line-height: 1;
+    }
+    .header_right a{
+      color: white;
+      text-decoration: none;
+    }
+    #intro-example {
+      height: 400px;
+    }
+
+    .tagnameclr {
+      color: white;
+      font-size: 3ch;
+      margin-left: 50px;
+    }
+    .mid_box .btn_box{margin-bottom: 30px !important;}
+    .mid_box .btn_box .btn{margin-right: 10px !important;}
+
+    @media (min-width: 992px) {
+      #intro-example {
+        height: 600px;
+      }
+    }
+    @media only screen and (max-width:767px)
+    {
+      .test .modal-content
+      {
+        margin-top: 34%;
+      }
+    }
+    @media only screen and (min-width: 768px) and (max-width: 1024px)
+    {
+      .test .modal-content
+      {
+        margin-top: 34%;
+        /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%; */
+      }
+    } 
+
+    .maincls {
+      background-color: #6c757dad;
+      border-radius: 2ch;
+      width: 600px;
+    }
+
+    .subcls {
+      margin-top: 20px;
+    }
+
+    #feedbackbtnid {
+      margin-left: 200px;
+      margin-bottom: 10px;
+    }
+
+
+    body {
+      background-color: #f6f6f6;
+    }
+    body .container{margin-top: 100px; margin-bottom: 100px;}
+    body .container .top_heading{margin-bottom: 30px; text-align: center;}
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      border: none;
+      position: relative;
+      margin-bottom: 10px;
+      box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+    }
+
+    .card .card-header {
+      border-bottom-color: #f9f9f9;
+      line-height: 30px;
+      -ms-grid-row-align: center;
+      align-self: center;
+      width: 100%;
+      padding: 10px 25px;
+      display: flex;
+      align-items: center;
+    }
+
+    .card .card-header,
+    .card .card-body,
+    .card .card-footer {
+      background-color: transparent;
+      padding: 10px 10px;
+    }
+
+    .card-header:first-child {
+      border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+    }
+
+    .card-header {
+      padding: .75rem 1.25rem;
+      margin-bottom: -10px;
+      background-color: rgba(0, 0, 0, .03);
+      border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .table:not(.table-sm) thead th {
+      border-bottom: none;
+      background-color: #e9e9eb;
+      color: #666;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .table .table-img img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #bbbbbb;
+      -webkit-box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
+      -moz-box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
+      -ms-box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
+      box-shadow: 5px 6px 15px 0px rgba(49, 47, 49, 0.5);
+      text-shadow: 0 0 black;
+    }
+
+    .table .team-member-sm {
+      width: 32px;
+      -webkit-transition: all 0.25s ease;
+      -o-transition: all 0.25s ease;
+      -moz-transition: all 0.25s ease;
+      transition: all 0.25s ease;
+    }
+
+    .table .team-member {
+      position: relative;
+      width: 30px;
+      white-space: nowrap;
+      border-radius: 1000px;
+      vertical-align: bottom;
+      display: inline-block;
+    }
+
+    .table .order-list li img {
+      border: 2px solid #ffffff;
+      box-shadow: 4px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .table .team-member img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 0;
+      border-radius: 1000px;
+    }
+
+    .rounded-circle {
+      border-radius: 50% !important;
+    }
+
+    .table .order-list li+li {
+      margin-left: -14px;
+      background: transparent;
+    }
+
+    .avatar.avatar-sm {
+      font-size: 12px;
+      height: 30px;
+      width: 30px;
+    }
+
+    .avatar {
+      background: #6777ef;
+      border-radius: 50%;
+      color: #e3eaef;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 300;
+      margin: 0;
+      position: relative;
+      vertical-align: middle;
+      line-height: 1.28;
+      height: 45px;
+      width: 45px;
+    }
+
+    .table .order-list li .badge {
+      background: rgba(228, 222, 222, 0.8);
+      color: #6b6f82;
+      margin-bottom: 6px;
+    }
+
+    .badge {
+      vertical-align: middle;
+      padding: 7px 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      border-radius: 30px;
+      font-size: 12px;
+    }
+
+    .progress-bar {
+      display: -ms-flexbox;
+      display: -webkit-box;
+      display: flex;
+      -ms-flex-direction: column;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: column;
+      -ms-flex-pack: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      background-color: #007bff;
+      -webkit-transition: width .6s ease;
+      transition: width .6s ease;
+    }
+
+    .bg-success {
+      background-color: #54ca68 !important;
+    }
+
+    .bg-purple {
+      background-color: #9c27b0 !important;
+      color: #fff;
+    }
+
+    .bg-cyan {
+      background-color: #10cfbd !important;
+      color: #fff;
+    }
+
+    .bg-red {
+      background-color: #f44336 !important;
+      color: #fff;
+    }
+
+    .progress {
+      -webkit-box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.15);
+      box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-action {
+      color: #fff !important;
+      line-height: 25px;
+      font-size: 12px;
+      min-width: 35px;
+      min-height: 35px;
+    }
+  </style> 
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+    <div class="logo"><a class="navbar-brand" href="/">BODHI AI</a>
+    </div> 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active"><a class="nav-link" aria-current="page" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="/tech/new_task">New Tasks</a></li>
+          {% if request.user.techperson.typeTech == "Team Leader" %}
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="/tech/assigned_task">Assigned Tasks</a></li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="/tech/accepted_task">Accepted Tasks</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="/tech/developer_task">Developer Tasks</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="/sales/logout">Logout</a></li>
+      </ul>
+    </div>
+    <div class="header_right">
+      <a href="/tech/profile"><span><i class="bi-person"></i> {{user.techperson.name}}</span></a>
+    </div>
+</nav> 
+<!-- <header>
+    <nav class="navbar navbar-dark bg-primary" style="background-color: 2e6da4">
+      <a class="navbar-brand tagnameclr"
+        style="font-size: 260%; color: black; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"
+        href="/">Bodhi Ai</a>
+      <div class="collapse navbar-collapse" style="margin-top: 8px;" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active tagnameclr" href="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link tagnameclr" href="/tech/new_task">New Tasks</a>
+          <a class="nav-item nav-link tagnameclr">My Profile</a>
+          <a href="/sales/logout">
+            <button class="tagnameclr" style="background-color:whitesmoke; color: black;border-radius: 1ch; ">
+              Logout
+            </button>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header> -->
+
+<body class="has-navbar-fixed-bottom">
+  {% if messages %}
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+        <i class="bi-check-circle-fill"></i>
+        <strong class="mx-2">{{ message.tags }}!</strong> {{ message }}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+      {% else %}
+      <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+        <i class="bi-exclamation-octagon-fill"></i>
+        <strong class="mx-2">{{ message.tags }}!</strong> {{ message }}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+      {% endif %}
+      {% endfor %}
+  {% endif %}
+
+    {% block body %} 
+    {% endblock %}
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<script type="text/javascript">
+    $(".navbar-nav li").click(function() {
+      $(".navbar-nav li").removeClass("active");
+      $(this).addClass("active");
+    });
+</script>   
+</html>

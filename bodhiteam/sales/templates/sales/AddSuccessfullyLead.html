@@ -1,0 +1,49 @@
+{% extends 'sales/base.html'%}
+{% block title %}Add successfully lead{% endblock title %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+  .maincls {
+    background-color: #6c757dad;
+    border-radius: 2ch;
+    width: 600px;
+  }
+
+  .subcls {
+    margin-top: 20px;
+  }
+
+  #feedbackbtnid {
+    margin-left: 200px;
+    margin-bottom: 10px;
+  }
+</style>
+<h1 style="text-align: center; color: black;">Add successfull Lead</h1>
+<div class="container maincls " style="margin-top: 40px;" id="all_leads">
+  <div class="div subcls " style="margin-left: 30px;">
+    <form action="{% url 'sales:add_comfirmLead' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-row" style="width: 500px;">
+        <div class="form-group">
+          <label for="inputPassword4">successfully Lead *</label>
+          <select name="comfirmlead" class="form-control">
+            <option value="" selected>Choose...</option>
+            {% for lead in leads %}
+            <option value="{{lead.id}}">{{lead.personName}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" id="forcheck">
+          <label for="inputPassword4">Decided Price *</label>
+          <input type="text" class="form-control" name="decidedPrice" required placeholder="type price">
+        </div>
+        <div class="form-group" id="forcheck">
+          <label for="inputPassword4">Extra requirments</label>
+          <input type="text" class="form-control" name="extrarequirments" placeholder="type requirments">
+        </div>
+      </div>
+      <button type="submit" id="feedbackbtnid" class="btn btn-primary">Add Lead</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}

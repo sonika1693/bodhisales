@@ -1,0 +1,83 @@
+{% extends 'sales/base.html'%}
+{% block title %}Send message{% endblock title %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+  .maincls {
+    background-color: #6c757dad;
+    border-radius: 2ch;
+    width: 600px;
+  }
+
+  .subcls {
+    margin-top: 20px;
+  }
+
+  #feedbackbtnid {
+    margin-left: 200px;
+    margin-bottom: 10px;
+  }
+</style>
+<h1 style="text-align: center; color: black;">Sending Message</h1>
+<div class="container maincls " style="margin-top: 40px;" id="all_leads">
+  <div class="div subcls " style="margin-left: 30px;">
+    <form action="{% url 'sales:Sendmassage' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-row" style="width: 500px;">
+        <div class="form-group">
+          <label for="inputPassword4">To *</label>
+          <select name="reciver" class="form-control" required>
+            <option value="" selected>Choose...</option>
+            {% for user in SalesExecutiveUser %}
+            <option value="{{user.id}}">{{user.executiveUser}} {{user.typeExecutive}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" id="forcheck">
+          <label for="inputPassword4">Message *</label>
+          <input type="text" class="form-control" required name="massage" required placeholder="type message">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword4">Lead</label>
+          <select name="sendinglead" id="leadfeedbacksalecttag" onchange="slectinglead()" class="form-control">
+            <option value="" selected>Choose...</option>
+            {% for lead in leads %}
+            <option value="{{lead.id}}">{{lead.personName}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" id="leadfeedbackdiv">
+          <label for="inputPassword4">Lead Feedback</label>
+          <select name="feedback" id="feedbacksalectTag" class="form-control">
+            <option value selected>Choose...</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" id="feedbackbtnid" class="btn btn-primary">Send Massage</button>
+    </form>
+  </div>
+</div>
+<script>
+  function slectinglead() {
+    var selectBox = document.getElementById("leadfeedbacksalecttag");
+    selected_lead_id = selectBox.options[selectBox.selectedIndex].value
+    document.querySelectorAll('#feedbacksalectTag option').forEach(o => o.remove());
+    $("#feedbacksalectTag").append('<option value selected>Choose..</option>')
+    $.ajax(
+      {
+        type: "GET",
+        url: "/sales/getting_feedbackes_leadwise_by_ajex",
+        data: {
+          Selected_lead_id: selected_lead_id
+        },
+        success: function (data) {
+          for (i = 0; i < data.length; i++) {
+            $("#feedbacksalectTag").append('<option value="' + data[i]["id"] + '">' + data[i]["typeFeedBack"] + '</option>')
+          }
+        }
+      });
+  }
+</script>
+{% endblock body %}
