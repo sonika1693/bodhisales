@@ -1,7 +1,5 @@
 from http.client import HTTPResponse
 import json
-from os import P_OVERLAY
-import json
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render,redirect
 from django.views.generic.base import View

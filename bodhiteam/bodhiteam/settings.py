@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # 'channels',
     'membership',
     'sales',
+    'crm',
     'tech',
     'rest_framework',
     'rest_framework.authtoken',
@@ -107,37 +108,37 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    #{
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    #},
+    # },
 ]
 
-REST_FRAMEWORK = { 
-       'DEFAULT_RENDERER_CLASSES': (
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        #'rest_framework.renderers.BrowsableAPIRenderer',
-    ),  
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
 
-    )   
+    )
 }
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE =  'Asia/Kolkata'
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = False
@@ -146,12 +147,12 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # this static files for images
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR, 'static')
 ]
-# end here 
+# end here
 STATIC_URL = '/static/'
 ASGI_APPLICATION = "bodhiteam.routing.application"
 CHANNEL_LAYERS = {
@@ -163,7 +164,7 @@ CHANNEL_LAYERS = {
     },
 }
 
-# messages override here 
+# messages override here
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
