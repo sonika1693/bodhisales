@@ -39,20 +39,11 @@ class GetMyNewLeads(APIView):
 
 class GetMyNewLeadsDateWise(APIView):
     def post(self,request,*args,**kwargs):
-<<<<<<< HEAD
-        my_profile = self.request.user.salesexecutive
-        data = request.data
-        date = data['date']
-        date_wise_leads = Lead.objects.filter(assignedTo=my_profile,date__date=date,lead_status='is_successfull_lead').order_by('-id')
-        leadsSerializer = LeadSerializer(date_wise_leads,many=True)
-        context = {'leads':leadsSerializer.data}
-=======
         date = request.data['date']
         date = datetime.datetime.strptime(date,'%Y-%m-%d')
         date_wise_leads = Lead.objects.filter(assignedTo=self.request.user.salesexecutive,date__date=date.date()).order_by('-date')
         leadsSerializer = LeadSerializer(date_wise_leads,many=True)
         context = {'leads':leadsSerializer.data,'date':str(main_date)}
->>>>>>> e1fdf938252b7f2686aa11f51d970d9f6081f076
         return Response(context)
 
 
