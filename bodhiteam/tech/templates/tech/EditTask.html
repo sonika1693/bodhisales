@@ -1,34 +1,16 @@
 {% extends 'tech/basic.html'%}
-{% block title %}New Tasks{% endblock %}
-<style>
-  form input, textarea{
-    background-color:aqua;
-    color:black;
-}
-</style>
+{% block title %}Edit Tasks{% endblock %}
 {% block body %} 
   <div class="container">
     <h3 class="top_heading">Edit Task</h3>
-      <form action="/tech/edit_task/" method="POST">
+      <form action="/tech/edit_task/" method="POST" class="large_form">
         {% csrf_token %}
         {% if request.GET.task_id %}
         <input type="hidden" name="task_id" value="{{request.GET.task_id}}">
         {% endif %}
-        <!-- <div class="row">
-          <div class="mb-3 col-md-6">
-            <label for="exampleInputEmail1" class="form-label">Status</label>
-            <select class="form-select" aria-label="Default select example">
-              <option value="" selected>Select</option>
-              {% for t in technology %}
-                  <option value="{{t.id}}">{{t.name}}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div> -->
-
         <div class="row">
           <div class="mb-3 col-md-12">
-            <label for="exampleInputEmail1" class="form-label">Worked By</label>
+            <label for="exampleInputEmail1" class="form-label">Assign Task to Developers</label>
             <select multiple name="worked_by" class="form-select" aria-label="Default select example">
               {% for developer in developer_list %}
                   {% if developer.id in workedBy %}
@@ -98,8 +80,8 @@
         </div>
 
         <div class="row">
-          <div class="mb-3 col-md-6">
-            <button type="submit" class="btn btn-secondary">Submit</button>
+          <div class="mb-3 col-md-12 btn_section">
+            <button type="submit" class="btn btn-dark">Submit</button>
           </div>
         </div>
         

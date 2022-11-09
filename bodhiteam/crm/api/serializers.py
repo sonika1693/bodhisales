@@ -114,3 +114,7 @@ class InstituteUpdateSerializer(serializers.ModelSerializer):
     #     instance.save()
     #     return instance
 
+class UpdateInstituteRequirementsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = UpdatesRequirements
+        fields = '__all__'

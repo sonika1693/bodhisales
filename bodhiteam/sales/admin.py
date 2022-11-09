@@ -36,8 +36,9 @@ class SuccessfullyLeadAdmin(admin.ModelAdmin):
     
 admin.site.register(Lead,LeadAdmin)
 admin.site.register(FeedBack,FeedBackAdmin)
-admin.site.register(DemoFeedback,DemoFeedbackAdmin)
+#admin.site.register(DemoFeedback,DemoFeedbackAdmin)
 admin.site.register(Massages,MassagesAdmin)
 admin.site.register(Notification)
 admin.site.register(SuccessfullyLead,SuccessfullyLeadAdmin)
 admin.site.register(DemoFeedback_And_LeadFeedback_Notifications,DemoFeedback_And_LeadFeedback_NotificationsAdmin)
+admin.site.register(Conversion)

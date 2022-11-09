@@ -3,6 +3,7 @@ from django.urls import path
 from sales.api import views
 
 
+
 urlpatterns = [
     url(r'get_my_new_leads/$',views.GetMyNewLeads.as_view(),name='GetMyNewLeads'),
     url(r'get_my_datewise_leads/$',views.GetMyNewLeadsDateWise.as_view(),name='salesExecutiveGetDateWiseLeads'),
@@ -35,6 +36,11 @@ urlpatterns = [
     url(r'get_worked_leads_fileterwise/$', views.UserGetWorkedLeadsFileterWiseAPI.as_view(), name='UserGetWorkedLeadsFileterWiseAPI'),
     url(r'get_my_today_assigned_leads/$', views.GetMyTodayAssignedLeadsAPI.as_view(), name='GetMyTodayAssignedLeadsAPI'),
     url(r'get_my_old_leads/$', views.GetMyOldLeadsAPI.as_view(), name='GetMyOldLeadsAPI'),
-    url(r'get_old_leads_filterwise/$', views.GetOldLeadsFilter.as_view(), name='GetOldLeadsFilter'),
+    url(r'see_datewise_salesuser_details/$', views.SeeDatewiseSalesUserDetails.as_view(), name='see_datewise_salesuser_details'),
+    url(r'admin_searching/$', views.AdminSearchingAPI.as_view(), name='admin_searching'),
+    url(r'leaderboard_list/$', views.LeaderboardList.as_view(), name='leaderboard_list'),
+
+    url(r'get_last_feedback_lead_wise/$', views.GetLastFeedbackLeadWiseApi.as_view(), name='get_last_feedback_lead_wise'),
+
 
 ]

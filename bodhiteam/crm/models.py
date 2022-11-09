@@ -9,12 +9,20 @@ class InstituteStatus(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    class Meta:
+        verbose_name = "Institute Status"
+        verbose_name_plural = "Institute Status"
+
 
 class UpdateRequirementsStatus(models.Model):
     title = models.CharField(max_length=100)
 
     def __str__(self) -> str:
         return self.title
+
+    class Meta:
+        verbose_name = "Update Requirements Status"
+        verbose_name_plural = "Update Requirements Status"
 
 
 class UpdatesRequirements(models.Model):
@@ -25,10 +33,14 @@ class UpdatesRequirements(models.Model):
     def __str__(self) -> str:
         return self.description
 
+    class Meta:
+        verbose_name = "Institute Requirements"
+        verbose_name_plural = "Institute Requirements"
+
 
 class Institute(models.Model):
     name = models.CharField(max_length=255)
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=15)
     date_of_conversion = models.DateField(null=True, blank=True)
     status = models.ForeignKey(to=InstituteStatus, on_delete=models.PROTECT, related_name='status')
     amount_of_conversion = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)

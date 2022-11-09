@@ -2,7 +2,6 @@ from django.conf.urls import url
 from tech.api import views
 
 urlpatterns = [
-    url(r'assigned_user/$',views.AssignedUser.as_view(),name='AssignedUser'),
     url(r'all_technology/$',views.AllTechnology.as_view(),name='AllTechnology'),
     url(r'tech_users/$',views.TechUsers.as_view(),name='TechUsers'),
     url(r'create_task/$',views.CreateTask.as_view(),name='CreateTask'),

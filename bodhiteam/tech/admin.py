@@ -1,5 +1,5 @@
 from django.contrib import admin
-from tech.models import *
+from .models import *
 
 # Register your models here.
 class TaskList(admin.ModelAdmin):
@@ -10,7 +10,5 @@ class DeveloperReportData(admin.ModelAdmin):
 
 admin.site.register(ProjectStatus)
 admin.site.register(UserStatus)
-# admin.site.register(TaskStatus)
 admin.site.register(Task,TaskList)   
 admin.site.register(DeveloperReport,DeveloperReportData)
-

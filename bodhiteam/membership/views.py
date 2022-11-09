@@ -1,9 +1,8 @@
-from venv import create
 from django.shortcuts import render,redirect
 from membership.models import SalesExecutive,TechPerson
 from django.contrib import messages
-from tech.models import *
 from sales.models import *
+from tech.models import *
 from datetime import datetime, timezone
 from django.db.models import Prefetch
 from django.db.models import Q
@@ -39,11 +38,27 @@ def IndexView(request):
                     if(profile==get_user):
                         new_task_length = Task.objects.filter(project_status__title__iexact = 'Created').count()
                         assign_task_length = Task.objects.filter(project_status__title__iexact = 'Assigned').count()
-                        return render(request,'tech/Index.html',{'new_task_length':new_task_length,'assign_task_length':assign_task_length})
+                        ongoing_task_length = Task.objects.filter(project_status__title__iexact = 'Ongoing').count()
+                        completed_task_length = Task.objects.filter(project_status__title__iexact = 'Completed').count()
+                        context = {
+                           'new_task_length':new_task_length,
+                           'assign_task_length':assign_task_length,
+                           'ongoing_task_length':ongoing_task_length,
+                           'completed_task_length':completed_task_length
+                        }
+                        return render(request,'tech/Index.html',context)
                     else:
                         new_task_length = DeveloperReport.objects.filter(developer=profile,task_status__title__iexact="Created").count()
                         accept_task_length = DeveloperReport.objects.filter(developer=profile,status__title__iexact = 'Accept').count()
-                        return render(request,'tech/Index.html',{'new_task_length':new_task_length,'accept_task_length':accept_task_length})
+                        ongoing_task_length = DeveloperReport.objects.filter(developer=profile,task_status__title__iexact = 'Ongoing').count()
+                        completed_task_length = DeveloperReport.objects.filter(developer=profile,task_status__title__iexact = 'Completed').count()
+                        context = {
+                           'new_task_length':new_task_length,
+                           'accept_task_length':accept_task_length,
+                           'ongoing_task_length':ongoing_task_length,
+                           'completed_task_length':completed_task_length
+                        }
+                        return render(request,'tech/Index.html',context)
                 except Exception as e:
                     messages.error(request, str(e))
                     return redirect('/sales/login')

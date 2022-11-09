@@ -2,36 +2,34 @@
 {% block title %}Accepted Tasks{% endblock %}
 {% block body %}
 <div class="container">
-    <h3 class="top_heading">Accepted Tasks</h3>
-    <div class="col-md-12 col-12 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-primary table-striped">
-              <tbody>
-                <tr>
-                  <th>S.no</th>
-                  <th>Task Title</th>
-                  <th>Create_date</th>
-                  <th>Status</th>
-                  <th>Task Status</th>
-                  <th>View</th>
-                </tr>
-                {% for task in tasks %}
-                <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{task.task.task_title}}</td>
-                  <td>{{task.date|date:"d-m-Y"}}</td>
-                  <td>{{task.status.title}}</td>
-                  <td>{{task.task_status.title}}</td>
-                  <td><a href="/tech/task_details/?task_id={{task.task.id}}"><i class="bi bi-eye"></i></a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+  <h3 class="top_heading">Accepted Tasks</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">S.no</th>
+          <th scope="col">Task Title</th>
+          <th scope="col">Create_date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Task Status</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead> 
+      {% if tasks %}
+          {% for task in tasks %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td class="w-25">{{task.task.task_title}}</td>
+            <td class="w-25">{{task.date|date:"d-m-Y"}}</td>
+            <td class="w-25">{{task.status.title}}</td>
+            <td class="w-25">{{task.task_status.title}}</td>
+            <td class="w-25"><a href="/tech/task_details/?task_id={{task.task.id}}"><i class="bi bi-eye"></i></a></td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr><th scope="col">No Records Available</td></tr>
+        {% endif %}
+    </table>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}

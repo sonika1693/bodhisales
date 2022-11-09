@@ -137,3 +137,23 @@ class CreateInstituteRequirementsAPI(APIView):
                 "message": f"{e}"
             }
         return Response(context)
+
+
+class UpdateInstituteRequirementsAPI(APIView):
+    def post(self, request):
+        try:
+            data = request.data.dict()
+            requirement = UpdatesRequirements.objects.get(id=data['id'])
+            serializer = UpdateInstituteRequirementsSerializers(instance=requirement, data=data, partial=True)
+            serializer.is_valid()
+            serializer.save()
+            context = {
+                "status": 'success',
+                "message": serializer.data
+            }
+        except Exception as e:
+            context = {
+                "status": 'Failed',
+                "message": f"{e}"
+            }
+        return Response(context)

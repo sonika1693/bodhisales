@@ -1,39 +1,21 @@
-from http.client import HTTPResponse
-import json
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.views.generic.base import View
 from django.contrib import messages
-from .models import *
-
+from .models import * 
 # Create your views here.
-def MyForm(request):
-    return render(request,'tech/myform.html')
-    
-def SearchReport(request):
-    task_id = request.GET.get('TaskID')
-    developer_id = request.GET.get('DeveloperID')
-    task = Task.objects.get(id=task_id)
-
-    if developer_id == 'all':
-        developer_report = DeveloperReport.objects.filter(task = task).order_by('-id').values()
-    else:
-        developer_report = DeveloperReport.objects.filter(developer__id = developer_id, task = task).order_by('-id').values()
-
-    return JsonResponse(list(developer_report),safe=False)
 
 def Profile(request):
-    user = request.user
-    get_techperson = TechPerson.objects.get(executiveUser=user)
-    return render(request,'tech/Profile.html',{'get_techperson':get_techperson})
+    user = request.user.techperson
+    return render(request,'tech/Profile.html')
 
 def CreateTask(request):
     if request.method == "GET":
-        developer_list = TechPerson.objects.filter(typeTech="Team Leader")
-        return render(request,'tech/CreateTask.html',{'developer_list':developer_list})
+        team_leader = TechPerson.objects.filter(typeTech="Team Leader")
+        return render(request,'tech/CreateTask.html',{'team_leader':team_leader})
 
     else:
-        developer_list = TechPerson.objects.filter(typeTech="Team Leader")
+        # team_leader = TechPerson.objects.filter(typeTech="Team Leader")
         assigned_to = request.POST.get('assigned_to')
         institute = request.POST.get('institute')
         task_title = request.POST.get('task_title')
@@ -42,19 +24,13 @@ def CreateTask(request):
         if due_date:
             due_date = due_date
         else:
-           due_date = None
-
+            due_date = None
+        
         assigned_user = TechPerson.objects.get(id=assigned_to)
         Task.objects.create(assignedTo=assigned_user,institute=institute,task_title=task_title,task_description=task_description,due_date=due_date)
-        
         messages.success(request, 'Create Task Successfully')
-        return render(request,'tech/CreateTask.html',{'developer_list':developer_list})
-
-def DeleteCreatedTask(request,id):
-    task = Task.objects.get(id=id)
-    task.delete()
-    messages.success(request, 'Delete Task Successfully')
-    return redirect("/tech/new_task/")
+        # return render(request,'tech/CreateTask.html',{'team_leader':team_leader})
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def NewTask(request):
     profile = request.user.techperson
@@ -65,7 +41,7 @@ def NewTask(request):
     else:
         tasks = DeveloperReport.objects.filter(developer=profile,task_status__title__iexact="Created").order_by('-id')
         task_count = tasks.count()
-    return render(request,'tech/NewTask.html',{'tasks':tasks,'task_count':task_count})
+    return render(request,'tech/NewTask.html',{'tasks':tasks,'task_count':task_count,'get_user':get_user})
 
 def AssignedTask(request):
     profile = request.user.techperson
@@ -75,6 +51,26 @@ def AssignedTask(request):
 
     return render(request,'tech/AssignedTask.html',{'tasks':tasks})
 
+def OngoingTask(request):
+    profile = request.user.techperson
+    get_user = TechPerson.objects.get(typeTech__iexact='Team Leader')
+    if(profile==get_user): 
+        tasks = Task.objects.filter(assignedTo=profile,project_status__title__iexact="Ongoing").order_by('-id')
+    else:
+        tasks = DeveloperReport.objects.filter(developer=profile, task_status__title__iexact="Ongoing").order_by('-id')
+
+    return render(request,'tech/OngoingTask.html',{'tasks':tasks})
+
+def CompletedTask(request):
+    profile = request.user.techperson
+    get_user = TechPerson.objects.get(typeTech__iexact='Team Leader')
+    if(profile==get_user): 
+        tasks = Task.objects.filter(assignedTo=profile,project_status__title__iexact="Completed").order_by('-id')
+    else:
+        tasks = DeveloperReport.objects.filter(developer=profile, task_status__title__iexact="Completed").order_by('-id')
+
+    return render(request,'tech/CompletedTask.html',{'tasks':tasks})
+
 def AcceptedTask(request):
     profile = request.user.techperson
     tasks = DeveloperReport.objects.filter(developer=profile,status__title__iexact="Accept").order_by('-id')
@@ -83,7 +79,7 @@ def AcceptedTask(request):
 def TaskDetails(request): 
     if request.method == "GET":
         task_id = request.GET.get('task_id')
-        task = Task.objects.get(id=task_id)
+        task = Task.objects.filter(id=task_id).first()
         users_list = task.workedBy.all()
         assigned_developer_report = DeveloperReport.objects.filter(developer__in = users_list, task = task).order_by('-id')
         individual_developer_report = DeveloperReport.objects.filter(developer = request.user.techperson, task = task).order_by('-id')
@@ -98,10 +94,32 @@ def TaskDetails(request):
             'individual_developer_report':individual_developer_report,
             'user_status':user_status,
             'task_status':task_status
-            }
+        }
+    else:
+        task_id = request.POST.get('task_id')
+        developer_id = request.POST.get('developer_id')
+        task = Task.objects.filter(id=task_id).first()
+        users_list = task.workedBy.all()
+        if developer_id == 'all':
+            assigned_developer_report = DeveloperReport.objects.filter(task = task).order_by('-id')
+        else:
+            assigned_developer_report = DeveloperReport.objects.filter(developer__id=developer_id,task = task).order_by('-id')
+
+        individual_developer_report = DeveloperReport.objects.filter(developer = request.user.techperson, task = task).order_by('-id')
+        user_status = UserStatus.objects.exclude(title__iexact='Unseen')
+        hide_status_from_list = ['Assigned','Created']
+        task_status = ProjectStatus.objects.exclude(title__in=hide_status_from_list)
+
+        context = {
+            'task':task,
+            'developers':users_list,
+            'assigned_developer_report':assigned_developer_report,
+            'individual_developer_report':individual_developer_report,
+            'user_status':user_status,
+            'task_status':task_status
+        }
 
     return render(request,'tech/TaskDetails.html',context)
-
 
 def DeleteDeveloperTask(request,id,task_id):
     report = DeveloperReport.objects.get(id=id)
@@ -110,19 +128,8 @@ def DeleteDeveloperTask(request,id,task_id):
     if all_reports==0:
         report.task.workedBy.remove(report.developer)
 
-    messages.success(request, 'Delete Report Successfully')
+    messages.success(request, 'Delete Successfully')
     return redirect(f"/tech/task_details/?task_id={task_id}")
-
-# def DeleteDeveloperTask(request,id,task_id):
-#     report = DeveloperReport.objects.get(id=id)
-#     all_reports = DeveloperReport.objects.filter(task__id=task_id,developer=report.developer)
-#     if len(all_reports) == 1:
-#         task = report.task
-#         user = report.developer
-#         report.delete()
-#         assigned_users = task.workedBy.remove(user)
-#     else:
-#         report.delete()
 
 def EditTask(request):
     if request.method == "POST": 
@@ -197,5 +204,19 @@ def AddReport(request,task_id):
     messages.success(request, 'New Report Added Successfully')
     return redirect("/tech/task_details/?task_id="+str(task_id))
 
+def DeleteCreatedTask(request,id):
+    task = Task.objects.get(id=id)
+    task.delete()
+    messages.success(request, 'Delete Task Successfully')
+    return redirect("/tech/new_task/")
 
-
+# def DeleteDeveloperTask(request,id,task_id):
+#     report = DeveloperReport.objects.get(id=id)
+#     all_reports = DeveloperReport.objects.filter(task__id=task_id,developer=report.developer)
+#     if len(all_reports) == 1:
+#         task = report.task
+#         user = report.developer
+#         report.delete()
+#         assigned_users = task.workedBy.remove(user)
+#     else:
+#         report.delete()

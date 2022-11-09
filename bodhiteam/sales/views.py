@@ -37,7 +37,14 @@ def UploadCSV(request):
             count += 1 
             lead = Lead.objects.filter(contactPhone=ph)
             if len(lead) > 0:
-                continue
+                lead = lead.first()
+                salesMan = SalesExecutive.objects.get(salesNumber=sa)
+                lead.lead_status = 'is_successfull_lead'
+                lead.assignedTo = salesMan
+                lead.is_this_reassigned_lead = True
+                lead.date  =  datetime.datetime.now()
+                lead.save()
+
             else:
                 try:
                     salesMan = SalesExecutive.objects.get(salesNumber=sa)
@@ -46,18 +53,34 @@ def UploadCSV(request):
                     source = None
                     name_coaching = None
                     det = no
-                    if 'Educator type' in det:
-                        type_educator = det.split('\n')[0]
-                        educator_type = type_educator.split(':')[1]
-                    if 'Coaching Name' in det:
-                        coaching_name = det.split('\n')[1]
-                        name_coaching = coaching_name.split(':')[1]
-                    if 'Email' in det:
-                        mail = det.split('\n')[2]
-                        mail = mail.split(':')[1]
-                    if 'Lead Source' in det:
-                        source=det.split('\n')[3]
-                        source=source.split(':')[1]
+                    
+                    try:
+                        if 'Educator type' in det:
+                            type_educator = det.split('\n')[0]
+                            educator_type = type_educator.split(':')[1]
+                    except:
+                        educator_type = None
+
+                    try:
+                        if 'Coaching Name' in det:
+                            coaching_name = det.split('\n')[1]
+                            name_coaching = coaching_name.split(':')[1]
+                    except:
+                        name_coaching = None
+
+                    try:
+                        if 'Email' in det:
+                            mail = det.split('\n')[2]
+                            mail = mail.split(':')[1]
+                    except:
+                        mail = None
+
+                    try:
+                        if 'Lead Source' in det:
+                            source=det.split('\n')[3]
+                            source=source.split(':')[1]
+                    except:
+                        source = None
                     
                     leads=Lead(personName=nm,source=source,instituteName=name_coaching,contactPhone=ph,email=mail,notes=educator_type,assignedTo=salesMan,date=datetime.datetime.now())
                     leads.save()

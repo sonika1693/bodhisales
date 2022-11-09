@@ -7,22 +7,11 @@ from tech.models import *
 from django.db.models import Q
 import datetime
 
-# assigned person details
-class AssignedUser(APIView):
-    def get(self,request):
-        get_user = TechPerson.objects.get(typeTech__iexact='Team Leader')
-        assign_info = {
-            'id':get_user.id,
-            'name':get_user.name
-        }        
-        context = {'status':'Success','message':'Leam Leader Info','assign_info':assign_info}
-        return Response(context)
-
 # show list of developer's technology 
 class AllTechnology(APIView):
     def get(self,request):
         profile = self.request.user.techperson
-        get_user = TechPerson.objects.get(typeTech__iexact='Team Leader')
+        get_user = TechPerson.objects.get(typeTech='Team Leader')
         technology_list = []
         if(profile==get_user):
             all_technology = Technology.objects.all()
@@ -122,7 +111,7 @@ class AssignTask(APIView):
         users_list = user_id.strip('][').split(',')
 
         user_task = Task.objects.get(id=task_id)
-        project_status = ProjectStatus.objects.get(title__iexact="Assigned")
+        project_status = ProjectStatus.objects.get(title="Assigned")
         user_task.project_status = project_status
         user_task.save()
 
@@ -140,7 +129,7 @@ class ProjectStatusList(APIView):
         allstatus = ProjectStatus.objects.all()
         status_list = []
         for i in allstatus:
-            if i.title__iexact=="Created" or i.title__iexact=="Assigned":
+            if i.title=="Created" or i.title=="Assigned":
                 pass
             else:
                 status = {'id':i.id,'title':i.title}
@@ -172,6 +161,9 @@ class UserTask(APIView):
             
         task_list = []
         for ut in user_tasks:
+            # user_status = UserStatus.objects.get(title="Seen")
+            # ut.status = user_status
+            # ut.save()
             all_task = {'id':ut.id,'task':ut.task.task_title,'status':ut.status.title}
             task_list.append(all_task)
 
@@ -200,20 +192,19 @@ class UpdateUserStatus(APIView):
         data = request.data
         user_id = data['user_id']
         task_id = data['task_id']
-        feedback = data['feedback']
         user_status_id = data['user_status_id']
         developer = TechPerson.objects.get(id=user_id)
         task = Task.objects.get(id=task_id)
         status = UserStatus.objects.get(id=user_status_id)
-        report = DeveloperReport.objects.create(developer=developer,task=task,status=status,developer_issues=feedback)
+        report = DeveloperReport.objects.create(developer=developer,task=task,status=status)
         
-        context = {'status':'Success','message':'User Data updated successfully'}
+        context = {'status':'Success','message':'User Status updated successfully'}
         return Response(context)
 
 class UserTaskReport(APIView):
     def post(self,request):
         profile = self.request.user.techperson
-        get_user = TechPerson.objects.get(typeTech__iexact='Team Leader')
+        get_user = TechPerson.objects.get(typeTech='Team Leader')
         data = request.data
         user_id = data['user_id']
         task_id = data['task_id']

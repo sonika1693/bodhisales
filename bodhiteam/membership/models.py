@@ -15,6 +15,13 @@ class SalesExecutive(models.Model):
     address = models.CharField(blank=True,null=True,max_length=100)
     ipAddress = models.CharField(blank=True,null=True,max_length=100)
 
+    sales_executive_status = (
+        ('Exist SalesExecutive', 'Exist SalesExecutive'),
+        ('Test SalesExecutive', 'Test SalesExecutive'),
+        ('Left SalesExecutive', 'Left SalesExecutive')
+    )
+    sales_executive_status = models.CharField(choices=sales_executive_status, max_length=50, default='Exist SalesExecutive',verbose_name='Sales Executive Status')
+
 
     def __str__(self):
         return self.name + ' ' + self.typeExecutive

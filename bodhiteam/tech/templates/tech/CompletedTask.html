@@ -1,0 +1,58 @@
+{% extends 'tech/basic.html'%}
+{% block title %}Completed Tasks{% endblock %}
+{% block body %}
+<div class="container">
+  <h3 class="top_heading">Completed Tasks</h3>
+  {% if request.user.techperson.typeTech == "Team Leader" %}
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Institute</th>
+          <th scope="col">Task Title</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead>
+      {% if tasks %} 
+        {% for task in tasks %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td class="w-25">{{task.institute}}</td>
+          <td class="w-25">{{task.task_title}}</td>
+          <td class="w-25"><a href="/tech/task_details/?task_id={{task.id}}"><i class="bi bi-eye"></i></a></td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr><th scope="col">No Records Available</td></tr>
+      {% endif %}
+    </table>
+  </div>
+  {% else %}
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Institute</th>
+          <th scope="col">Task Title</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead>
+      {% if tasks %} 
+        {% for task in tasks %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td class="w-25">{{task.task.institute}}</td>
+          <td class="w-25">{{task.task.task_title}}</td>
+          <td class="w-25"><a href="/tech/task_details/?task_id={{task.task.id}}"><i class="bi bi-eye"></i></a></td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr><th scope="col">No Records Available</td></tr>
+      {% endif %}
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -4,76 +4,124 @@
   <div class="container">
     <h3 class="top_heading">All New Tasks</h3>
     {% if request.user.techperson.typeTech == "Team Leader" %}
-    <div class="col-md-12 col-12 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-primary table-striped">
-              <tbody>
-                <tr>
-                  <th>S.no</th>
-                  <th>Institute</th>
-                  <th>Task Title</th>
-                  <th>Create_date</th>
-                  <th>Due_date</th>
-                  <th>Status</th>
-                  <!-- <th>View</th> -->
-                  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-                {% for task in tasks %}
-                <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{task.institute}}</td>
-                  <td>{{task.task_title}}</td>
-                  <td>{{task.create_date|date:"d-m-Y"}}</td>
-                  <td>{{task.due_date|date:"d-m-Y"}}</td>
-                  <td>{{task.project_status}}</td>
-                  <!-- <td>
-                    <a href="/tech/task_details/?task_id={{task.id}}" class="btn btn-primary btn-action mr-1"
-                      data-toggle="tooltip" title="" data-original-title="Details">View</a>
-                  </td> -->
-                  <td><a href="/tech/edit_task/?task_id={{task.id}}"><i class="bi bi-pencil-fill"></i></a></td>
-                  <td><a href="/tech/delete_created_task/{{task.id}}"><i class="bi bi-trash"></i></a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-12 col-12 col-sm-12 after_top_heading">
+      <a href="#" data-toggle="modal" data-target="#modalTaskCreateForm" class="themesflat-button bg-accent">
+        <button type="button" class="btn btn-dark">Create Task</button>
+      </a>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">S.no</th>
+              <th scope="col">Institute</th>
+              <th scope="col">Task Title</th>
+              <th scope="col">Create_date</th>
+              <th scope="col">Due_date</th>
+              <!-- <th scope="col">View</th> -->
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          {% if tasks %}
+            {% for task in tasks %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td class="w-25">{{task.institute}}</td>
+              <td class="w-25">{{task.task_title}}</td>
+              <td class="w-25">{{task.create_date}}</td>
+              <td class="w-25">{{task.due_date}}</td>
+              <!-- <td class="w-25">
+                <a href="/tech/task_details/?task_id={{task.id}}" class="btn btn-primary btn-action mr-1"
+                  data-toggle="tooltip" title="" data-original-title="Details">View</a>
+              </td> -->
+              <td class="w-25"><a href="/tech/edit_task/?task_id={{task.id}}"><i class="bi bi-pencil-fill"></i></a></td>
+              <td class="w-25"><a href="/tech/delete_created_task/{{task.id}}"><i class="bi bi-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr><th scope="col">No Records Available</td></tr>
+          {% endif %}
+      </table>
     </div>
     {% else %}
-    <div class="col-md-12 col-12 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-primary table-striped">
-              <tbody>
-                <tr>
-                  <th>S.no</th>
-                  <th>Task Title</th>
-                  <th>Create_date</th>
-                  <th>Status</th>
-                  <th>Task Status</th>
-                  <th>View</th>
-                </tr>
-                {% for task in tasks %}
-                <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{task.task.task_title}}</td>
-                  <td>{{task.date|date:"d-m-Y"}}</td>
-                  <td>{{task.status.title}}</td>
-                  <td>{{task.task_status.title}}</td>
-                  <td><a href="/tech/task_details/?task_id={{task.task.id}}"><i class="bi bi-pencil-fill"></i></a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">S.no</th>
+              <th scope="col">Task Title</th>
+              <th scope="col">Create_date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Task Status</th>
+              <th scope="col">View</th>
+            </tr>
+          </thead>
+          {% if tasks %}
+            {% for task in tasks %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td class="w-25">{{task.task.task_title}}</td>
+              <td class="w-25">{{task.date|date:"d-m-Y"}}</td>
+              <td class="w-25">{{task.status.title}}</td>
+              <td class="w-25">{{task.task_status.title}}</td>
+              <td class="w-25"><a href="/tech/task_details/?task_id={{task.task.id}}"><i class="bi bi-eye"></i></a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr><th scope="col">No Records Available</td></tr>
+          {% endif %}
+          
+      </table>
     </div>
     {% endif %}
   </div>
+  <!-- popup for create task -->
+<div  class="modal fade test" id="modalTaskCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold"><b> Create New Task</b></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <form action="/tech/create_task/" method="POST">
+              {% csrf_token %}
+              <div class="modal-body mx-3">
+                  <div class="md-form mb-3" style="display:none;">
+                      <label data-error="wrong" data-success="right" for="form34">Assigned To</label>
+                      <select name="assigned_to" class="form-select" aria-label="Default select example">
+                            <option value="{{get_user.id}}" selected>{{get_user.name}}</option>
+                      </select>
+                  </div>
+                  <div class="md-form mb-3">
+                      <label data-error="wrong" data-success="right" for="form34">Institute</label>
+                      <input type="text" class="form-control" name="institute">
+                  </div> 
+                  <div class="md-form mb-3">
+                    <label data-error="wrong" data-success="right" for="form34">Task Title</label>
+                    <input type="text" class="form-control" name="task_title">
+                </div>
+                <div class="md-form mb-3">
+                  <label data-error="wrong" data-success="right" for="form34">Task Description</label>
+                  <textarea class="form-control" rows="4" name="task_description"></textarea>
+              </div>
+              <div class="md-form mb-3">
+                <label data-error="wrong" data-success="right" for="form34">Task Due Date</label>
+                <input type="datetime-local" class="form-control" name="due_date">
+              </div>
+
+              <div class="md-form mb-3 btn_section">
+                <button type="submit" class="btn btn-dark"><strong>Submit</strong></button>
+              </div>
+                    
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- pop end -->
 {% endblock %}
+
+

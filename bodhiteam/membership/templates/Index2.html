@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home-BodhiAi</title>
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <title>Home-BodhiAi </title>
+<link rel="icon" href="https://media-exp1.licdn.com/dms/image/C4E0BAQGK5tu_PetIpg/company-logo_200_200/0/1625212519411?e=2159024400&v=beta&t=ocxBt-Df3dcJ0hWnNey39RzIb8unDaSrXE3lQRv1TdQ" type="image/png">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <div class="grey-bg container-fluid" style="margin-top: 20px;"></div>
     <style>
         .grey-bg {
@@ -34,11 +43,12 @@
         }
     </style>
 </head>
+
 <body>
-    {% if request.user.salesexecutive %}
     <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Welcome
         {{user.salesexecutive.name}} {{user.salesexecutive.typeExecutive}}</h1>
     <h3 style="text-align: center; font-family: serif ;">Bodhi AI </h3>
+    {% if request.user.salesexecutive %}
     <div class="container-fluid px-2">
         <section id="minimal-statistics" style="margin-top: 10px;">
             <div class="row">
@@ -348,82 +358,11 @@
         </section>
     </div>
     {% else %}
-    <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;">Welcome
-        {{user.techperson.name}} {{user.techperson.typeTech}}</h1>
-    <h3 style="text-align: center; font-family: serif ;">Bodhi AI </h3>
-    <div style="text-align: center;">
-        <a href="/sales/logout"><button style="border-radius: 0.5ch; width: 100px; background: rgb(216, 213, 213);">Logout</button></a>
-    </div>
-    <div class="container-fluid px-2" style="margin-top: 50px;">
-        <section id="minimal-statistics" style="margin-top: 10px;">
-            <div class="row">
-                {% if request.user.techperson.typeTech == "Team Leader" %}
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <a href="/tech/create_task/">
-                        <div class="card" style="background: rgb(215, 182, 247)">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="align-self-center">
-                                            <i class="icon-list primary font-large-2 float-left"></i>
-                                        </div>
-                                        <div class="media-body text-right">
-                                            <h3 class="success"></h3>
-                                            <span>Create Task</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% else %}
-                {% endif %}
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <a href="/tech/new_task/">
-                        <div class="card" style="background: rgb(215, 182, 247);">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="align-self-center">
-                                            <i class="icon-check success font-large-2 float-left"></i>
-                                        </div>
-                                        <div class="media-body text-right">
-                                            <h3 class="success"></h3>
-                                            <span>New Tasks ({{new_task_length}})</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-12">
-                    <a href="/tech/assigned_task/">
-                        <div class="card" style="background: rgb(215, 182, 247)">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="align-self-center">
-                                            <i class="icon-check success font-large-2 float-left"></i>
-                                        </div>
-                                        <div class="media-body text-right">
-                                            <h3 class="success"></h3>
-                                            <span>Assigned Task ({{assign_task_length}})</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-            </div>
-        </section>
-    </div>
+    <h1 style="text-align: center;">You Are a tech user </h1>
+    <a href="/sales/logout"><button
+        style="margin-left: 720px; border-radius: 0.5ch; width: 100px; background: rgb(216, 213, 213);">Logout</button></a>
     {% endif %}
-
-
+    
     {% if messages %}
     <div class="container" style="height: 200px; position: fixed;top:500px; left: 200px; right: 200px;">
         <div class="div"
@@ -444,27 +383,28 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                <h4 class="modal-title">New message</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                {{i.massage}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <h4 class="modal-title">New message</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {{i.massage}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-{% endfor %}
-{% if user_notification %}
-<script>
-{% for i in user_notification %}
-$("#{{i.id}}myModal").modal('show')
-{% endfor %}
-</script>
-{% endif %}
+    {% endfor %}
+    {% if user_notification %}
+    <script>
+        {% for i in user_notification %}
+        $("#{{i.id}}myModal").modal('show')
+        {% endfor %}
+    </script>
+    {% endif %}
+    </script>
 </body>
 
 </html>
