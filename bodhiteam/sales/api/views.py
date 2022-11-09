@@ -39,12 +39,20 @@ class GetMyNewLeads(APIView):
 
 class GetMyNewLeadsDateWise(APIView):
     def post(self,request,*args,**kwargs):
+<<<<<<< HEAD
         my_profile = self.request.user.salesexecutive
         data = request.data
         date = data['date']
         date_wise_leads = Lead.objects.filter(assignedTo=my_profile,date__date=date,lead_status='is_successfull_lead').order_by('-id')
         leadsSerializer = LeadSerializer(date_wise_leads,many=True)
         context = {'leads':leadsSerializer.data}
+=======
+        date = request.data['date']
+        date = datetime.datetime.strptime(date,'%Y-%m-%d')
+        date_wise_leads = Lead.objects.filter(assignedTo=self.request.user.salesexecutive,date__date=date.date()).order_by('-date')
+        leadsSerializer = LeadSerializer(date_wise_leads,many=True)
+        context = {'leads':leadsSerializer.data,'date':str(main_date)}
+>>>>>>> e1fdf938252b7f2686aa11f51d970d9f6081f076
         return Response(context)
 
 
@@ -457,9 +465,9 @@ class FilterAndSortForAdminApi(APIView):
         selected_toDate_for_filter = data['selected_toDate']
         selected_feedback_for_filter = selected_feedback_for_filter.strip('][').split(',')
 
-        if data['selected_feedback'] and selected_fromDate_for_filter:
+        if data['selected_feedback'] and selected_fromDate_for_filter != 'null':
             Filterd_leads = Lead.objects.filter(Q(Q(feeback_lead__feedback__in=selected_feedback_for_filter) | Q(demo_lead__demo_feedback__in=selected_feedback_for_filter)) & Q(date__gte=selected_fromDate_for_filter,date__lte=selected_toDate_for_filter)  ).order_by('-date').distinct()
-        elif selected_fromDate_for_filter:
+        elif selected_fromDate_for_filter != 'null':
             Filterd_leads = Lead.objects.filter(date__gte=selected_fromDate_for_filter,date__lte=selected_toDate_for_filter).order_by('-date')
         else:
             Filterd_leads = Lead.objects.filter(Q(feeback_lead__feedback__in=selected_feedback_for_filter) | Q(demo_lead__demo_feedback__in=selected_feedback_for_filter)).order_by('-date').distinct()
@@ -477,6 +485,12 @@ class AssignLeadToAnotherUserApi(APIView):
         lead.assignedTo = SalesExecutive.objects.get(id=user_id)
         lead.save()
         return Response({'status':'update successfully'})
+
+class DeleteLeadByAdminApi(APIView):
+    def post(self,request):
+        lead_id = request.data['lead_id']
+        lead = Lead.objects.get(id=lead_id).delete()    
+        return Response({'status':'delete successfullt'})
 
 class LogoutUserApi(APIView):
     def get(self,request):
