@@ -24,15 +24,6 @@ urlpatterns = [
     url(r'get_today_schedule/$', views.TodayScheduleReminderAPI.as_view(), name='TodayScheduleReminderAPI'),
     url(r'add_successfull_lead/$', views.AddSuccessfullyLeadsAPI.as_view(), name='add_successfull_lead'),
     url(r'get_my_successfully_leads/$', views.SpecificPersonSuccessfullyLeadsAPI.as_view(), name='get_my_successfully_leads'),
-<<<<<<< HEAD
-    url(r'apply_filter_search/$', views.ApplyFilterAndSeacrhAPI.as_view(), name='ApplyFilterAndSeacrhAPI'),
-    url(r'applysorting/$', views.SortingApplyAPI.as_view(), name='SortingApplyAPI'),
-    url(r'sales_user_profile/$', views.SalesUserProfileApi.as_view(), name='SalesUserProfileApi'),
-    url(r'salesuser_changepassword/$', views.SalesUserChangePasswordApi.as_view(), name='SalesUserChangePasswordApi'),
-    url(r'admin_filter_sort_leads/$', views.FilterAndSortForAdminApi.as_view(), name='filterAndSortForAdmin'),
-    url(r'assign_lead_to_anotheruser/$', views.AssignLeadToAnotherUserApi.as_view(), name='AssignLeadToAnotherUserApi'),
-    url(r'delete_lead/$', views.DeleteLeadByAdminApi.as_view(), name='DeleteLeadByAdminApi'),
-=======
     url(r'applyFilterAndSearch/$', views.ApplyFilterAndSeacrhAPI.as_view(), name='applyFilterAndSearch'),
     url(r'applysorting/$', views.SortingApplyAPI.as_view(), name='applysorting'),
     url(r'salesUserProfile/$', views.SalesUserProfileApi.as_view(), name='salesUserProfile'),
@@ -41,7 +32,6 @@ urlpatterns = [
     url(r'assignLeadToAnotherUser/$', views.AssignLeadToAnotherUserApi.as_view(), name='assignLeadToAnotherUser'),
     url(r'deleteLead/$', views.DeleteLeadByAdminApi.as_view(), name='deleteLead'),
 
->>>>>>> e1fdf938252b7f2686aa11f51d970d9f6081f076
     url(r'logout/$', views.LogoutUserApi.as_view(), name='logout'),
 
     url(r'get_worked_leads_fileterwise/$', views.UserGetWorkedLeadsFileterWiseAPI.as_view(), name='UserGetWorkedLeadsFileterWiseAPI'),
